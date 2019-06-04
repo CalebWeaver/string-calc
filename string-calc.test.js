@@ -15,3 +15,7 @@ test('given 1, should return 1', () => {
 test('given 1 and 2, should return 3', () => {
 	expect(add("1,2")).toBe(3);
 });
+
+test('given NaN, should return 0', () => {
+	expect(add("Dolphinately not a number")).toBe(0);
+});

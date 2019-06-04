@@ -3,7 +3,15 @@ function add(numbers) {
 		let total = 0;
 		let splitNumbers = numbers.split(',');
 
-		splitNumbers.forEach(number => total += parseInt(number));
+		splitNumbers.forEach(number => {
+			let parsedNumber = parseInt(number);
+
+			if (!isNaN(parsedNumber)) {
+				total += parsedNumber;
+			} else {
+				console.error('Unknown input', number);
+			}
+		});
 		
 		return total;
 	}
