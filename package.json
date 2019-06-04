@@ -1,0 +1,15 @@
+{
+  "name": "string-calc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "string-calc.js",
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^24.8.0"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Caleb Weaver",
+  "license": "ISC"
+}
