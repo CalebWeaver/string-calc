@@ -1,6 +1,11 @@
 function add(numbers) {
 	if (numbers && numbers.length > 0) {
-		return parseInt(numbers);
+		let total = 0;
+		let splitNumbers = numbers.split(',');
+
+		splitNumbers.forEach(number => total += parseInt(number));
+		
+		return total;
 	}
 	return 0;
 }
