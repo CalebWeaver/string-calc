@@ -11,7 +11,10 @@ function add(numbers) {
 		splitNumbers.forEach(number => {
 			let parsedNumber = parseInt(number);
 
-			if (!isNaN(parsedNumber)) {
+			if (parsedNumber < 0) {
+				console.log(parsedNumber);
+				throw 'negative not allowed';
+			} else if (!isNaN(parsedNumber)) {
 				total += parsedNumber;
 			} else {
 				console.error('Unknown input', number);
