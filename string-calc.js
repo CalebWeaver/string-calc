@@ -1,7 +1,7 @@
 function add(numbers) {
 	if (numbers && numbers.length > 0) {
 		let total = 0;
-		let splitExp = new RegExp(',|\n');
+		let splitExp = createSplitRegex();
 
 		let parsingConfig = { numbers, splitExp };
 		({ numbers, splitExp } = findDelimiter(parsingConfig));
@@ -23,18 +23,36 @@ function add(numbers) {
 }
 
 function findDelimiter(parsingConfig) {
+
 	let { numbers, splitExp } = parsingConfig;
+
 	if (numbers.length > 2) {
-		if (isNaN(numbers[0]) && numbers[1] === '\n') {
-			splitExp = new RegExp(',|\n|'+escapeRegex(numbers[0]));
+		if (hasSingleCustomDelimiter(numbers)) {
+			splitExp = createSplitRegex(escapeRegex(numbers[0]));
 			numbers = numbers.substring(2,numbers.length);
-		} else if (numbers[0] === '[' && numbers.includes(']')) {
+		} else if (hasLongCustomDelimiter(numbers)) {
 			let delimiter = escapeRegex(numbers.substring(1, numbers.indexOf(']')));
-			splitExp = new RegExp(',|\n|'+delimiter);
+			splitExp = createSplitRegex(delimiter);
 			numbers = numbers.substring(numbers.indexOf(']') + 2);
 		}
 	}
 	return { numbers, splitExp };
+}
+
+function hasSingleCustomDelimiter(numbers) {
+	return isNaN(numbers[0]) && numbers[1] === '\n';
+}
+
+function hasLongCustomDelimiter(numbers) {
+	return numbers[0] === '[' && numbers.includes(']');
+}
+
+function createSplitRegex(delimiter) {
+	let splitExpLiteral = ',|\n';
+	if (delimiter) {
+		splitExpLiteral += '|' + delimiter;
+	}
+	return new RegExp(splitExpLiteral);
 }
 
 function escapeRegex(unescapedRegex) {
