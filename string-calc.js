@@ -1,4 +1,5 @@
 function add(numbers) {
+	
 	if (numbers && numbers.length > 0) {
 		let total = 0;
 		let splitExp = createSplitRegex();
@@ -22,6 +23,20 @@ function add(numbers) {
 	return 0;
 }
 
+function createSplitRegex(delimiter) {
+
+	let splitExpLiteral = ',|\n';
+
+	if (Array.isArray(delimiter)) {
+		delimiter = delimiter.join('|');
+	}
+	if (delimiter) {
+		splitExpLiteral += '|' + delimiter;
+	}
+
+	return new RegExp(splitExpLiteral);
+}
+
 function findDelimiter(parsingConfig) {
 
 	let { numbers, splitExp } = parsingConfig;
@@ -31,11 +46,12 @@ function findDelimiter(parsingConfig) {
 			splitExp = createSplitRegex(escapeRegex(numbers[0]));
 			numbers = numbers.substring(2,numbers.length);
 		} else if (hasLongCustomDelimiter(numbers)) {
-			let delimiter = escapeRegex(numbers.substring(1, numbers.indexOf(']')));
+			let delimiter = getComplexDelimiters(numbers);
 			splitExp = createSplitRegex(delimiter);
-			numbers = numbers.substring(numbers.indexOf(']') + 2);
+			numbers = numbers.substring(numbers.lastIndexOf(']') + 2);
 		}
 	}
+
 	return { numbers, splitExp };
 }
 
@@ -47,16 +63,20 @@ function hasLongCustomDelimiter(numbers) {
 	return numbers[0] === '[' && numbers.includes(']');
 }
 
-function createSplitRegex(delimiter) {
-	let splitExpLiteral = ',|\n';
-	if (delimiter) {
-		splitExpLiteral += '|' + delimiter;
+function getComplexDelimiters(numbers) {
+
+	let delimiters = [];
+
+	while (numbers.indexOf(']') > -1) {
+		delimiters.push(escapeRegex(numbers.substring(1, numbers.indexOf(']'))));
+		numbers = numbers.substring(numbers.indexOf(']') + 1);
 	}
-	return new RegExp(splitExpLiteral);
+
+	return delimiters;
 }
 
 function escapeRegex(unescapedRegex) {
-    return unescapedRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    return unescapedRegex.replace(/[-\/\\^$*+?.()|[\]{}]/, '\\$&');
 }
 
 module.exports = add;
