@@ -32,8 +32,8 @@ test('given the first line has a delimiter, should return 35', () => {
 	expect(add("%\n1%2,17\n15")).toBe(35);
 });
 
-test('given the first line has a delimiter, should return 35', () => {
-	expect(add("%\n1%2,17\n15")).toBe(35);
+test('given the first line has a delimiter, should ignore other delimiters and return 16', () => {
+	expect(add("%\n1%2)17\n15")).toBe(16);
 });
 
 test('given 1, 2, and -3, should throw exception', () => {
