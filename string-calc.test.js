@@ -27,3 +27,7 @@ test('given 1, 2, 3, and 15, should return 21', () => {
 test('given 1, 2, 3, and 15 with newline separator, should return 21', () => {
 	expect(add("1,2,3\n15")).toBe(21);
 });
+
+test('given the first line has a delimiter, should return 35', () => {
+	expect(add("%\n1%2,17\n15")).toBe(35);
+});
