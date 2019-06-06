@@ -14,9 +14,9 @@ function add(numbers) {
 			if (parsedNumber < 0) {
 				console.log(parsedNumber);
 				throw 'negative not allowed';
-			} else if (!isNaN(parsedNumber)) {
+			} else if (!isNaN(parsedNumber) && parsedNumber <= 1000) {
 				total += parsedNumber;
-			} else {
+			} else if (isNaN(parsedNumber)){
 				console.error('Unknown input', number);
 			}
 		});

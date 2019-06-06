@@ -39,3 +39,7 @@ test('given the first line has a delimiter, should return 35', () => {
 test('given 1, 2, and -3, should throw exception', () => {
 	expect(() => add("1,2,-3")).toThrow('negative not allowed');
 });
+
+test('given 1 and 2000, should return 1', () => {
+	expect(add("1,2000")).toBe(1);
+});
