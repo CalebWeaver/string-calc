@@ -7,13 +7,8 @@ function add(numbers) {
 		({ numbers, splitExp } = findDelimiter(parsingConfig));
 
 		let splitNumbers = numbers.split(splitExp);
-		console.log(numbers);
-		console.log(splitNumbers);
-
 		splitNumbers.forEach(number => {
-			console.log(number);
 			if (number < 0) {
-				console.log(number);
 				throw 'negative not allowed';
 			} else if (!isNaN(number) && number <= 1000) {
 				total += parseInt(number);
@@ -31,11 +26,19 @@ function findDelimiter(parsingConfig) {
 	let { numbers, splitExp } = parsingConfig;
 	if (numbers.length > 2) {
 		if (isNaN(numbers[0]) && numbers[1] === '\n') {
-			splitExp = new RegExp(',|\n|'+numbers[0]);
+			splitExp = new RegExp(',|\n|'+escapeRegex(numbers[0]));
 			numbers = numbers.substring(2,numbers.length);
+		} else if (numbers[0] === '[' && numbers.includes(']')) {
+			let delimiter = escapeRegex(numbers.substring(1, numbers.indexOf(']')));
+			splitExp = new RegExp(',|\n|'+delimiter);
+			numbers = numbers.substring(numbers.indexOf(']') + 2);
 		}
 	}
 	return { numbers, splitExp };
+}
+
+function escapeRegex(unescapedRegex) {
+    return unescapedRegex.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
 module.exports = add;

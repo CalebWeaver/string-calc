@@ -32,6 +32,10 @@ test('given the first line has a delimiter, should return 35', () => {
 	expect(add("%\n1%2,17\n15")).toBe(35);
 });
 
+test('given the first line has a long delimiter, should return 35', () => {
+	expect(add("[^p%]\n1^p%2,3%12,17\n15")).toBe(35);
+});
+
 test('given the first line has a delimiter, should ignore other delimiters and return 16', () => {
 	expect(add("%\n1%2)17\n15")).toBe(16);
 });
