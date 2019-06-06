@@ -23,3 +23,7 @@ test('given NaN, should return 0', () => {
 test('given 1, 2, 3, and 15, should return 21', () => {
 	expect(add("1,2,3,15")).toBe(21);
 });
+
+test('given 1, 2, 3, and 15 with newline separator, should return 21', () => {
+	expect(add("1,2,3\n15")).toBe(21);
+});

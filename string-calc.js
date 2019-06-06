@@ -1,7 +1,7 @@
 function add(numbers) {
 	if (numbers && numbers.length > 0) {
 		let total = 0;
-		let splitNumbers = numbers.split(',');
+		let splitNumbers = numbers.split(/[,(\n)]/);
 
 		splitNumbers.forEach(number => {
 			let parsedNumber = parseInt(number);
